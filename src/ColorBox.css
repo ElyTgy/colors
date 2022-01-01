@@ -1,0 +1,7 @@
+.color-box{
+    width:20%;
+    height:25%;
+    display: inline-block;
+
+    cursor:pointer;
+}
