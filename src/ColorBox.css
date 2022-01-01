@@ -25,6 +25,7 @@
     text-transform:uppercase;
     border:none;
     opacity:0;
+    cursor: pointer;
 }
 
 .color-box:hover .copy-button{
