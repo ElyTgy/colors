@@ -8,12 +8,12 @@ import "./Navbar.css"
 class Navbar extends Component{
     constructor(props){
         super(props);
-        this.state = {format:this.props.format};
+        this.state = {format:this.props.format, open:false};
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(e){
-        this.setState({format:e.target.value})
+        this.setState({format:e.target.value, open:true})
         this.props.handleChange(e.target.value);
     }
 
