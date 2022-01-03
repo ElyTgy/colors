@@ -8,7 +8,7 @@ export default class ColorBox extends Component {
         super(props)
         this.state = {copied:false}
     }
-    
+
     changeCopyState(){
         this.setState({copied: true}, ()=>{
             setTimeout(()=>this.setState({copied:false}), 1500);
