@@ -19,17 +19,25 @@ class Navbar extends Component{
     }
 
     render(){
+        let slider = (
+        <div className="slider-container">
+            <span>Level: {this.props.level}</span>
+            <div className="slider">
+                <Slider defaultValue={this.props.level} step={100} min={100} max={900} onAfterChange={this.props.changeLevel}/>
+            </div>
+        </div>)
+
+        if(!this.props.level || !this.props.changeLevel){
+            console.log("slider cannot render");
+            slider = null
+        }
+        
         return (
             <header className="Navbar">
                 <div className="logo">
                     <Link to="/">color picker</Link>
                 </div>
-                <div className="slider-container">
-                    <span>Level: {this.props.level}</span>
-                    <div className="slider">
-                        <Slider defaultValue={this.props.level} step={100} min={100} max={900} onAfterChange={this.props.changeLevel}/>
-                    </div>
-                </div>
+                {slider}
                 <div className="select-container">
                     <Select value={this.state.format} onChange={this.handleChange}>
                         <MenuItem value="hex">HEX</MenuItem>
