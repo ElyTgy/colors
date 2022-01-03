@@ -44,9 +44,11 @@ export default class SingleColorPalette extends Component {
                 <h1>{this.props.paletteName}</h1>
                 <div className="palette-colors">
                     {colorBoxes}
-                    <div className="go-back color-box">
-                        <Link to={`/palette/${this.props.id}`} className="back-button">go back</Link>
-                    </div>
+                    <Link to={`/palette/${this.props.id}`} >
+                        <div className="go-back color-box">
+                            <button className="back-button">go back</button>
+                        </div>
+                    </Link>
                 </div>
                 <PaletteFooter paletteName={this.props.paletteName} emoji={this.props.emoji}/>
             </div>

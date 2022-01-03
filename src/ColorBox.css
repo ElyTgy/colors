@@ -6,6 +6,7 @@
     position: relative;
     cursor:pointer;
     vertical-align: top;
+    font-size: 0.85rem;
 }
 
 .single-color-palette .color-box{
@@ -54,7 +55,16 @@
     left:0px;
     bottom:0px;
     text-transform: uppercase;
-    letter-spacing: 1px;;
+    letter-spacing: 1px;
+    color:black;
+}
+
+.light-text{
+    color:white;
+}
+
+.color-box .dark-text{
+    color:rgb(80, 80, 80);
 }
 
 .see-more{
