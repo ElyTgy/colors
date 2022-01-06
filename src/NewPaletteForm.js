@@ -12,6 +12,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Button, Typography } from '@material-ui/core';
 import { ChromePicker } from 'react-color';
+import { ThemeProvider } from '@material-ui/styles';
 
 const drawerWidth = 400;
 
@@ -74,6 +75,19 @@ const styles = theme => ({
 
 
 class NewPaletteForm extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            open:true,
+            currentColor:"purple"
+        }
+        this.updateColor = this.updateColor.bind(this)
+    }
+
+    updateColor(newColor){
+        this.setState({currentColor:newColor.hex})
+    }
+
     state = {
         open: false,
       };
@@ -133,8 +147,10 @@ class NewPaletteForm extends Component {
                 <Button variant="contained" color="secondary">clear palette</Button>
                 <Button variant="contained" color="primary">random color</Button>
               </div>
-              <ChromePicker color="purple" onChangeComplete={(color)=>console.log(color)}/>
-              <Button variant="contained" color="primary">add color</Button>
+              <ChromePicker color={this.state.currentColor} onChangeComplete={this.updateColor}/>
+              <Button variant="contained" color="primary" style={{backgroundColor:this.state.currentColor}}>
+                  add color
+              </Button>
             </Drawer>
             <main
               className={classNames(classes.content, {
