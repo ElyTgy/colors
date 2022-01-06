@@ -5,14 +5,15 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { Button, Typography } from '@material-ui/core';
+import { ChromePicker } from 'react-color';
 
-const drawerWidth = 300;
+const drawerWidth = 400;
 
 const styles = theme => ({
   root: {
@@ -127,7 +128,13 @@ class NewPaletteForm extends Component {
                 </IconButton>
               </div>
               <Divider />
-              
+              <Typography variant="h4">design your palette</Typography>
+              <div>
+                <Button variant="contained" color="secondary">clear palette</Button>
+                <Button variant="contained" color="primary">random color</Button>
+              </div>
+              <ChromePicker color="purple" onChangeComplete={(color)=>console.log(color)}/>
+              <Button variant="contained" color="primary">add color</Button>
             </Drawer>
             <main
               className={classNames(classes.content, {
@@ -135,7 +142,7 @@ class NewPaletteForm extends Component {
               })}
             >
               <div className={classes.drawerHeader} />
-
+              
             </main>
           </div>
         );
