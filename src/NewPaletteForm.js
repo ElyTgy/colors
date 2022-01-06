@@ -15,6 +15,7 @@ import { ChromePicker } from 'react-color';
 import { ThemeProvider } from '@material-ui/styles';
 import DraggableColorBox from './DraggableColorBox';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { Redirect } from 'react-router-dom';
 
 
 const drawerWidth = 400;
@@ -85,18 +86,38 @@ class NewPaletteForm extends Component {
             open:true,
             currentColor:"purple",
             newName: "",
-            colors: []
+            colors: [],
+            newPaletteName:""
         }
         this.updateColor = this.updateColor.bind(this)
         this.addNewColor = this.addNewColor.bind(this)
-        this.handleNameChange = this.handleNameChange.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.savePalette = this.savePalette.bind(this)
+    }
+
+    savePalette(){
+        let paletteName = this.state.newPaletteName;
+        const palette = {
+            paletteName:paletteName,
+            id:paletteName.toLowerCase().replace(/ /g, "-"),
+            emoji: "",
+            colors:this.state.colors
+        }
+        this.props.addPalette(palette)
+        this.props.history.push("/");
     }
 
     componentDidMount(){
+        //hasColors
         ValidatorForm.addValidationRule("isUnique", value =>{
             for(let color of this.state.colors){
                 if(color.name.toLowerCase() === value.toLowerCase()){return false;}
             }
+            return true;
+        })
+
+        ValidatorForm.addValidationRule("hasColors", value =>{
+            if(this.state.colors.length === 0){return false}
             return true;
         })
     }
@@ -113,8 +134,8 @@ class NewPaletteForm extends Component {
         this.setState({colors: [...this.state.colors, colorObj], newName:""})
     }
 
-    handleNameChange(evt){
-        this.setState({newName:evt.target.value})
+    handleChange(evt){
+        this.setState({[evt.target.name]:evt.target.value})
     }
 
     state = {
@@ -138,6 +159,7 @@ class NewPaletteForm extends Component {
             <CssBaseline />
             <AppBar
               position="fixed"
+              color="default"
               className={classNames(classes.appBar, {
                 [classes.appBarShift]: open,
               })}
@@ -154,6 +176,21 @@ class NewPaletteForm extends Component {
                 <Typography variant="h6" color="inherit" noWrap>
                   Persistent drawer
                 </Typography>
+                <ValidatorForm onSubmit={this.savePalette}>
+                    <TextValidator 
+                        label="palette name" 
+                        value={this.state.newPaletteName} 
+                        onChange={this.handleChange}
+                        name="newPaletteName"
+                        validators={['required', 'hasColors']}
+                        errorMessages={['palette name is required', 'add at least one color to the palette']}
+                    />
+                    <Button 
+                        variant='contained' 
+                        color="primary"
+                        type="submit">
+                    SAVE PALETTE</Button>
+                </ValidatorForm>
               </Toolbar>
             </AppBar>
             <Drawer
@@ -179,8 +216,9 @@ class NewPaletteForm extends Component {
               <ChromePicker color={this.state.currentColor} onChangeComplete={this.updateColor}/>
               <ValidatorForm onSubmit={this.addNewColor}>
                   <TextValidator 
+                    name="newName"
                     value={this.state.newName} 
-                    onChange={this.handleNameChange} 
+                    onChange={this.handleChange} 
                     validators={["required", "isUnique"]}
                     errorMessages={["this field is requied", "name must be unique"]}
                   />

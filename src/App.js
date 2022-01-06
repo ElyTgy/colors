@@ -11,17 +11,25 @@ export default class App extends Component {
     constructor(props){
         super(props)
         this.findPalette = this.findPalette.bind(this);
+        this.addPalette = this.addPalette.bind(this)
+        this.state = {palettes : seedColors}
     }
+
     findPalette(id){
-        console.log(seedColors.find((palette)=>palette.id === id))
-        return seedColors.find((palette)=>palette.id === id)
+        console.log(this.state.palettes.find((palette)=>palette.id === id))
+        return this.state.palettes.find((palette)=>palette.id === id)
+    }
+
+    addPalette(newPlatte){
+        console.log(newPlatte)
+        this.setState({palettes:[...this.state.palettes, newPlatte]})
     }
 
     render() {
         return (
             <Switch>
-                <Route exact path="/" render={(routeProps)=><PaletteList palettes={seedColors} {...routeProps}/>}/>
-                <Route exact path="/palette/new" render={()=><NewPaletteForm/>}/>
+                <Route exact path="/" render={(routeProps)=><PaletteList palettes={this.state.palettes} {...routeProps}/>}/>
+                <Route exact path="/palette/new" render={(routeProps)=><NewPaletteForm addPalette={this.addPalette} {...routeProps}/>}/>
                 <Route exact path="/palette/:id" render={routeProps=><Palette {...generatePalette(this.findPalette(routeProps.match.params.id))}/>}/>
                 <Route exact path="/palette/:paletteId/:colorId" render={routeProps=><SingleColorPalette 
                     {...generatePalette(this.findPalette(routeProps.match.params.paletteId))}
