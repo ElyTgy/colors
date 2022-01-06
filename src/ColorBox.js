@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {Link} from 'react-router-dom'
 import chroma from 'chroma-js';
+import { withStyles } from '@material-ui/styles';
 import "./ColorBox.css"
 
-export default class ColorBox extends Component {
+
+class ColorBox extends Component {
     constructor(props){
         super(props)
         this.state = {copied:false}
@@ -42,3 +44,5 @@ export default class ColorBox extends Component {
         )
     }
 }
+
+export default ColorBox;

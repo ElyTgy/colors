@@ -22,7 +22,12 @@ const styles = {
         display:"flex",
         width:"100%",
         justifyContent:"space-between",
-        color: "white"
+        color: "white",
+        alignItems:"center",
+        color: "white",
+        "& a": {
+            color:"white"
+        }
     },
     palettes: {
         boxSizing:"border-box",
@@ -48,6 +53,7 @@ class PaletteList extends Component {
                 <div className={this.props.classes.container}>
                     <nav className={this.props.classes.nav}>
                         <h1>React Colors</h1>
+                        <Link to="/palette/new">create palette</Link>
                     </nav>
                     <div className={this.props.classes.palettes}>
                         {palettes}
