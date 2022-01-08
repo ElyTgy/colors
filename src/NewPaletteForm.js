@@ -120,6 +120,13 @@ class NewPaletteForm extends Component {
             if(this.state.colors.length === 0){return false}
             return true;
         })
+
+        ValidatorForm.addValidationRule("isUniquePalette", value=>{
+          for(let name of this.props.paletteNames){
+            if(name === this.state.newPaletteName){return false;}
+        }
+        return true;
+        })
     }
 
     updateColor(newColor){
@@ -182,8 +189,8 @@ class NewPaletteForm extends Component {
                         value={this.state.newPaletteName} 
                         onChange={this.handleChange}
                         name="newPaletteName"
-                        validators={['required', 'hasColors']}
-                        errorMessages={['palette name is required', 'add at least one color to the palette']}
+                        validators={['required', 'hasColors', 'isUniquePalette']}
+                        errorMessages={['palette name is required', 'add at least one color to the palette', 'please choose a unique name']}
                     />
                     <Button 
                         variant='contained' 
